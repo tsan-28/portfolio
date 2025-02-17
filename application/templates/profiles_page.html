@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block content %}
+{% load bootstrap_icons %}
+
+
+    {% for profile in profiles %}
+    <div>
+        {% if profile.image %}
+        <img src="{{ profile.image.url }}" alt="" width="50px"  height="50px" style="border-radius: 50%; float: left; margin-right: 20px;">
+        {% endif %}
+        <h2>@ {{profile.username}}</h2>
+        <a href="{{profile.git_link}}" target="_blank" class="badge bg-primary">{% bs_icon 'github' %}</a>
+    </div>
+    <hr>
+    {% endfor %}
+{% endblock %}

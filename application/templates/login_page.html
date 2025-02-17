@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load bootstrap_icons %}
+{% block content %}
+
+    {% if messages %}
+    {% for message in messages %}
+        <p class="alert alert-danger">{{message}}</p>
+    {% endfor %}
+    {% endif %}
+
+    <form method="post" class="">
+
+        {% csrf_token %}
+        <!-- <input name="username" type="text" class="form-control w-25 m-2">
+        <input name="password" type="password" class="form-control w-25 m-2">
+        <input type="submit" value="Login" class="m-2 bg-primary rounded text-white" style="border: none;"> -->
+        {{form.as_p}}
+        <input type="submit" value="Login">
+    </form>
+    <a href="{% url 'register' %}">Don't have an account?... Sign up</a>
+{% endblock %}

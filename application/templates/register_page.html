@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load bootstrap_icons %}
+{% block content %}
+
+    {% if messages %}
+    {% for message in messages %}
+        <p class="alert alert-danger">{{message}}</p>
+    {% endfor %}
+    {% endif %}
+
+
+
+    <form method="post" class="">
+        {% csrf_token %}
+        <input name="username" type="text" class="form-control w-25 m-2" placeholder="username">
+        <input type="email" name="email" class="form-control w-25 m-2" placeholder="email">
+        <input name="password1" type="password" class="form-control w-25 m-2" placeholder="password">
+        <input type="password" name="password2" class="form-control w-25 m-2" placeholder="confirm password">
+        <input type="submit" value="Sign up" class="m-2 bg-primary rounded text-white" style="border: none;">
+    </form>
+    <a href="{% url 'login' %}">Already have an account?... Sign in</a>
+{% endblock %}

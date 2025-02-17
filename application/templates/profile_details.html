@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load bootstrap_icons %}
+
+{% block content %}
+    <img src="{{profile.image.url}}" alt="{{profile.user.username}}'s profile picture"
+    style="float: left; border-radius: 50%;">
+    <h1>{{profile.user.username}}</h1> <br>
+    <h3>Date of Birth</h3>
+    <p class="badge bg-primary">{{profile.date_of_birth}}</p><br>
+    <h3>Bio</h3>
+    <p class="">{{profile.bio}}</p>
+    <h3>Email</h3>
+    <p>{{profile.email}}</p>
+    <h3>Github Link</h3>
+    <p class="badge bg-primary">{{profile.git_link}}</p>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load bootstrap_icons %}
+{% block content %}
+
+
+<span class="bg-gray-600">{% bs_icon 'chevron-left' %}{% bs_icon 'chevron-right' %}</span>
+<h1 class="card text-center d-flex" style="margin-top: 50px;">
+            Hello, I am
+            <a href="">...</a>
+            Fullstack Developer | Software Engineer  
+</h1>
+<div class="container" style="margin-bottom: 20px;
+        display: flex; flex-direction: row; 
+        margin: 20px 0px 20px 0px;">
+{% for project in projects %}
+    <a href="">
+        <div class="card flex" style="width: 18rem; ">
+            <img src="{{ project.image }}" alt="{{ project.title }}" class="card-img-top">
+            <div class="card-body">
+                <h3 class="card-title">{{project.description}}</h3>
+                <div class="card-text">
+                    <p>{% bs_icon 'github' %}{{project.github_url}}</p>
+                    <h6 class="badge bg-primary">Created On: {{project.date_created}}</h6>
+                </div>
+            </div>
+        </div>
+    </a>
+{% endfor %}
+</div>
+{% for contact in contacts %}
+    <footer class="footer bg-gray">
+        <ul>
+            <li class="h2"><a href="">{% bs_icon 'telephone' %} {{contact.phone}}</a></li>
+            <li class="h2"><a href="">{% bs_icon 'envelope-at' %} {{contact.email}}</a></li>
+            <li class="h2"><a href="">{% bs_icon 'github' %} {{contact.git_link}}</a></li>
+        </ul>
+    </footer>
+{% endfor %}
+{% endblock %}

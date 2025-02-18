@@ -11,7 +11,7 @@ def random_string_generator(size = 10, chars = string.ascii_lowercase + string.d
 
 def unique_slug_generator(instance, new_slug = None):
 	if new_slug is not None: 
-		# If no initial slug is provided, it generates a slug from the instance.user.username (assuming the instance is a Profile object)
+		# If no initial slug is provided, it generates a slug from the instance.user.username (assuming the instance is a Profile object
 		slug = new_slug
 
 	else: 

@@ -17,7 +17,7 @@ urlpatterns = [
     path('login/', login_page, name="login"),
     path('logout/', log_out_view, name="logout"),
     path('profiles/', profiles_list_view, name="profiles"),
-    path('profiles/<str:id>', profile_details_view, name="profile_details"),
+    path('profiles/<slug:slug>', profile_details_view, name="profile_details"),
     path('register/', register_view, name="register"),
 
 ]

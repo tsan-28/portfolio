@@ -94,10 +94,10 @@ def profiles_list_view(request):
 
 
 
-def profile_details_view(request, id):
+def profile_details_view(request, slug):
     try:
         # Fetch the profile or return a 404 if it doesn't exist
-        profile = get_object_or_404(Profile, id=id)
+        profile = get_object_or_404(Profile, slug=slug)
 
         # Fetch education records associated with the profile's user
         education = Education.objects.filter(user=profile.user)

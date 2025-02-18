@@ -1,5 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.dispatch import receiver
+from django.db.models.signals import pre_save 
+from .utils import unique_slug_generator
 
 
 class Profile(models.Model):
@@ -10,10 +13,14 @@ class Profile(models.Model):
     bio = models.CharField(max_length=250)
     email = models.EmailField()
     git_link = models.URLField(blank=True, null=True)
-    slug = models.SlugField(default="" , null=True)
+    slug = models.SlugField(max_length=50, default="" ,blank=True , null=True)
     def __str__(self):
         
         return str(self.user)
+@receiver(pre_save, sender=Profile) 
+def pre_save_receiver(sender, instance, *args, **kwargs): 
+    if not instance.slug: 
+        instance.slug = unique_slug_generator(instance) 
 
 
 class Project(models.Model):

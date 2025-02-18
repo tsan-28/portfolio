@@ -10,6 +10,7 @@ class Profile(models.Model):
     bio = models.CharField(max_length=250)
     email = models.EmailField()
     git_link = models.URLField(blank=True, null=True)
+    slug = models.SlugField(default="" , null=True)
     def __str__(self):
         
         return str(self.user)

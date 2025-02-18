@@ -12,11 +12,8 @@ from .models import (
 # class activationAdmin(admin.ModelAdmin):
 #     list_display = ('user', 'code', 'email')
 
-class ProfileAdmin(admin.ModelAdmin):
-    list_display = ("email", "git_link")
-    prepopulated_fields = {"slug": ("email",)}
 
-admin.site.register(Profile, ProfileAdmin)
+admin.site.register(Profile)
 admin.site.register(Project)
 admin.site.register(Referee)
 admin.site.register(Education)

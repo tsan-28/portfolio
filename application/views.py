@@ -15,7 +15,10 @@ from .models import (
     Expert,
     Referee
 )
-from .forms import LoginForm
+from .forms import (
+    LoginForm,
+    profile_updateForm,
+)
 
 
 
@@ -118,3 +121,8 @@ def profile_details_view(request, slug):
         return render(request, 'error.html', {'error': str(e)})
     
 
+def update_profile(request, slug):
+    obj = Profile.objects.get_object_or_404(slug=slug)
+    form = profile_updateForm(instance=obj)
+    context = {"form": form}
+    return render(request, 'edit_profile.html', context)

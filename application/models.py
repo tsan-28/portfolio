@@ -86,14 +86,6 @@ class Contact(models.Model):
     def __str__(self):
         return self.phone
 
-# from .models import Activation
-
-
-# class activationAdmin(admin.ModelAdmin):
-#     list_display = ('user', 'code', 'email')
-
-# admin.site.register(Activation)
-
 
 
 

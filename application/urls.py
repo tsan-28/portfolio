@@ -9,7 +9,9 @@ from .views import (home_view,
                     register_view,
                     log_out_view,
                     profiles_list_view,
-                    profile_details_view
+                    profile_details_view,
+                    change_password,
+                    update_profile,
                     )
 
 urlpatterns = [
@@ -18,8 +20,9 @@ urlpatterns = [
     path('logout/', log_out_view, name="logout"),
     path('profiles/', profiles_list_view, name="profiles"),
     path('profiles/<slug:slug>', profile_details_view, name="profile_details"),
+    path('profiles/edit/<slug:slug>/', update_profile, name="edit_profile"),
     path('register/', register_view, name="register"),
-
+    path('login/change_password/', change_password, name="change_password")
 
 ]
 

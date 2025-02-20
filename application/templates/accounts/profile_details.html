@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'accounts/base.html' %}
 {% load static %}
 {% load bootstrap5 %}
 {% bootstrap_css %}
@@ -17,5 +17,8 @@
     <p>{{profile.email}}</p>
     <h3>Github Link</h3>
     <p class="badge bg-primary">{{profile.git_link}}</p>
+    {% if request.user == profile.user %}
+        <a href="{% url 'edit_profile' slug=profile.slug %}" class="btn btn-primary">edit Profile</a>
+    {% endif %}
 
 {% endblock %}

@@ -6,6 +6,8 @@ from django.utils.deprecation import MiddlewareMixin
 
 
 
+#this middleware monitors the number of times
+
 class LimitLoginAttemptsMiddleware(MiddlewareMixin):
     def process_view(self, request, view_func, view_args, view_kwargs):
         if request.path == reverse('login'):

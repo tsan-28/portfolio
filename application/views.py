@@ -1,4 +1,3 @@
-
 from django.template import loader
 from django.core.cache import cache
 from django.http import HttpResponse
@@ -8,9 +7,9 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from App import settings
-
 from .models import (
     Profile,
     Project,
@@ -27,12 +26,15 @@ from .forms import (
 
 
 
+
+
+
 #this is the home page view
 def home_view(request):
     contacts = Contact.objects.all()
     person = User.objects.all()
     projects = Project.objects.all()
-    template = loader.get_template('home_page.html')
+    template = loader.get_template('accounts/home_page.html')
 
     context = {
         'person': person,
@@ -40,6 +42,10 @@ def home_view(request):
         'contacts': contacts
     }
     return HttpResponse(template.render(context, request))
+
+
+
+
 
 #this is the login page view
 def login_page(request):
@@ -63,11 +69,14 @@ def login_page(request):
     else:
         form = LoginForm()
     
-    return render(request, 'login_page.html', {'form': form})
+    return render(request, 'accounts/ogin_page.html', {'form': form})
+
+
+
 
 #this is the view for registering new members
 def register_view(request):
-    template =loader.get_template('register_page.html')
+    template =loader.get_template('accounts/register_page.html')
     context = {}
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -91,11 +100,17 @@ def register_view(request):
     return HttpResponse(template.render(context, request))
 
 
+
+
+
 #this view logs out a user and redirects them to the home page
 def log_out_view(request):
     logout(request)
     return redirect('home')
         
+
+
+
 
 @login_required(login_url="/login")
 def profiles_list_view(request):
@@ -103,7 +118,22 @@ def profiles_list_view(request):
     context = {
         "profiles": profiles
     }
-    return render(request, 'profiles_page.html', context)
+    return render(request, 'accounts/profiles_page.html', context)
+
+
+
+def change_password(request):
+    form = PasswordChangeForm(request.user)
+    if request.method == "POST":
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, "Password changed successfully")
+        else:
+            messages.error(request, "Input valid password")
+    return render(request, 'accounts/change_password.html', {'form': form})
+
 
 
 
@@ -125,15 +155,18 @@ def profile_details_view(request, slug):
             'experience': experience,
             'referre': referee,
         }
-        return render(request, 'profile_details.html', context)
+        return render(request, 'accounts/profile_details.html', context)
 
     except Exception as e:
         # Handle any unexpected errors
-        return render(request, 'error.html', {'error': str(e)})
+        return render(request, 'accounts/error.html', {'error': str(e)})
     
 
+
+
+
 def update_profile(request, slug):
-    obj = Profile.objects.get_object_or_404(slug=slug)
+    obj = get_object_or_404(Profile, slug=slug)
     form = profile_updateForm(instance=obj)
     context = {"form": form}
-    return render(request, 'edit_profile.html', context)
+    return render(request, 'accounts/edit_profile.html', context)

@@ -20,6 +20,7 @@ urlpatterns = [
     path('profiles/<slug:slug>', profile_details_view, name="profile_details"),
     path('register/', register_view, name="register"),
 
+
 ]
 
 

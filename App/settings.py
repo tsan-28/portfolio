@@ -25,6 +25,8 @@ SECRET_KEY = 'django-insecure-0njt1xqolf2@sa8z5!08-lr!pq8zc(l7#m9)y@&w3sa2iwg2)r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+LOGIN_ATTEMPT_LIMIT = 5
+
 ALLOWED_HOSTS = []
 
 
@@ -45,6 +47,8 @@ INSTALLED_APPS = [
     'application',
     'bootstrap5',
     'django_bootstrap_icons',
+
+
 ]
 
 MIDDLEWARE = [
@@ -55,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'application.middleware.LimitLoginAttemptsMiddleware',
 ]
 
 ROOT_URLCONF = 'App.urls'

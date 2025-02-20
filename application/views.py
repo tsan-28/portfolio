@@ -1,4 +1,6 @@
+
 from django.template import loader
+from django.core.cache import cache
 from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.models import User
@@ -6,6 +8,9 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+
+from App import settings
+
 from .models import (
     Profile,
     Project,
@@ -46,9 +51,15 @@ def login_page(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
+                failed_attempts = cache.delete(f'failed_logins_{username}')
                 return redirect('/')
             else:
-                form.add_error(None, "Invalid username or password.")
+                failed_attempts = cache.get(f'failed_logins_{username}', 0) + 1
+                cache.set(f'failed_logins_{username}', failed_attempts, timeout=300)
+                if failed_attempts >= settings.LOGIN_ATTEMPT_LIMIT:
+                    messages.error(request, 'Too many failed attempts. Please try again later.')
+                else:
+                    messages.error(request, 'Invalid username or password.')
     else:
         form = LoginForm()
     

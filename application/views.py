@@ -10,6 +10,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from App import settings
+from django.core.mail import EmailMessage
 from .models import (
     Profile,
     Project,
@@ -22,6 +23,8 @@ from .models import (
 from .forms import (
     LoginForm,
     profile_updateForm,
+    EmailForm,
+    
 )
 
 
@@ -69,7 +72,7 @@ def login_page(request):
     else:
         form = LoginForm()
     
-    return render(request, 'accounts/ogin_page.html', {'form': form})
+    return render(request, 'accounts/login_page.html', {'form': form})
 
 
 
@@ -122,6 +125,31 @@ def profiles_list_view(request):
 
 
 
+
+def send_email(request):  # Rename the view function to avoid conflict
+    if request.method == 'POST':
+        form = EmailForm(request.POST, request.FILES)  # Use EmailForm here
+        if form.is_valid():
+            recipient = form.cleaned_data['to_email']
+            subject = form.cleaned_data['subject']
+            attachment = form.cleaned_data['attachment']
+            message = form.cleaned_data['description']
+            
+            # Create EmailMessage instance
+            email = EmailMessage(subject, message, to=[recipient])
+            email.attach(attachment.name, attachment.read(), attachment.content_type)
+            email.send()
+            
+            return redirect('emailsuccess')  # Redirect after a successful email send
+    else:
+        form = EmailForm()  # Instantiate the form correctly here
+    
+    return render(request, 'email/send_email.html', {'form': form})
+
+
+def emailConfirm_view(request):
+    return render(request, 'email/email_success.html')
+
 def change_password(request):
     form = PasswordChangeForm(request.user)
     if request.method == "POST":
@@ -158,7 +186,6 @@ def profile_details_view(request, slug):
         return render(request, 'accounts/profile_details.html', context)
 
     except Exception as e:
-        # Handle any unexpected errors
         return render(request, 'accounts/error.html', {'error': str(e)})
     
 

@@ -12,6 +12,7 @@
             <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">
                 {% if user.is_authenticated %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link bg-primary" href="{% url 'send_email' %}">Send Email</a></li>
                 {% else %}
                 Sign in
                 {% endif %}

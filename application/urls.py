@@ -12,6 +12,8 @@ from .views import (home_view,
                     profile_details_view,
                     change_password,
                     update_profile,
+                    emailConfirm_view,
+                    send_email,
                     )
 
 urlpatterns = [
@@ -22,8 +24,9 @@ urlpatterns = [
     path('profiles/<slug:slug>', profile_details_view, name="profile_details"),
     path('profiles/edit/<slug:slug>/', update_profile, name="edit_profile"),
     path('register/', register_view, name="register"),
-    path('login/change_password/', change_password, name="change_password")
-
+    path('login/change_password/', change_password, name="change_password"),
+    path('emailsuccess/', emailConfirm_view, name="emailsuccess"),
+    path('send-email/', send_email, name="send_email")
 ]
 
 

@@ -14,6 +14,7 @@ from .views import (home_view,
                     update_profile,
                     emailConfirm_view,
                     send_email,
+                    project_view,
                     )
 
 urlpatterns = [
@@ -26,7 +27,8 @@ urlpatterns = [
     path('register/', register_view, name="register"),
     path('login/change_password/', change_password, name="change_password"),
     path('emailsuccess/', emailConfirm_view, name="emailsuccess"),
-    path('send-email/', send_email, name="send_email")
+    path('send-email/', send_email, name="send_email"),
+    path('projects/', project_view, name="projects")
 ]
 
 

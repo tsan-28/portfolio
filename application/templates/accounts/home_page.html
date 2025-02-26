@@ -21,7 +21,7 @@
         <div class="card flex" style="width: 18rem; ">
             <img src="{{ project.image }}" alt="{{ project.title }}" class="card-img-top">
             <div class="card-body">
-                <h3 class="card-title">{{project.description}}</h3>
+                <h3 class="card-title">{{project.truncated_description}}</h3>
                 <div class="card-text">
                     <p>{% bs_icon 'github' %}{{project.github_url}}</p>
                     <h6 class="badge bg-primary">Created On: {{project.date_created}}</h6>

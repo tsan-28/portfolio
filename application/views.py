@@ -197,3 +197,12 @@ def update_profile(request, slug):
     form = profile_updateForm(instance=obj)
     context = {"form": form}
     return render(request, 'accounts/edit_profile.html', context)
+
+
+def project_view(request):
+    projects = Project.objects.all()
+    context = {
+        'projects': projects,
+        
+        }
+    return render(request, 'project/projects_page.html', context)

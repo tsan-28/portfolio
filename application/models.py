@@ -29,6 +29,12 @@ class Project(models.Model):
     github_url = models.URLField(blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    @property
+    def truncated_description(self):
+        words = self.description.split()
+        if len(words) > 5:  # Modify this number to the desired length
+            return ' '.join(words[:5]) + '...'
+        return self.description
     def __str__(self):
         return self.title
 

@@ -1,0 +1,23 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load bootstrap_icons %}
+{% block content %}
+    {% for project in projects %}
+        <img src="{{ project.image }}" alt="{{project.user.username}}">
+    <a href="">
+        <div class="card flex" style="width: 18rem; ">
+            <img src="{{ project.image }}" alt="{{ project.title }}" class="card-img-top">
+            <div class="card-body">
+                <h3 class="card-title">{{project.truncated_description}}</h3>
+                <div class="card-text">
+                    <p>{% bs_icon 'github' %}{{project.github_url}}</p>
+                    <h6 class="badge bg-primary">Created On: {{project.date_created}}</h6>
+                </div>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+{% endblock %}
